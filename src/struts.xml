@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!--
+    <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+    <constant name="struts.action.extension" value="do"></constant>
+    <constant name="struts.serve.static.browserCache" value="false"></constant>
+    <constant name="struts.configuration.xml.reload" value="true"></constant>
+    <constant name="struts.devMode" value="true"></constant>
+    <constant name="struts.ui.theme" value="simple"></constant>
+      -->
+    <constant name="struts.objectFactory" value="spring" />
+    <!-- 
+    <package name="parent" extends="struts-default">  
+        <global-results>  
+            <result name="message">/WEB-INF/page/share/message.jsp</result>  
+        </global-results>  
+    </package>
+     -->
+    <!-- 后台控制中心管理 -->
+    <package name="control" namespace="/control/center" extends="struts-default">
+        <action name="main">
+            <result name="success">/WEB-INF/page/controlcenter/default.jsp</result>
+        </action>
+        <action name="top">
+            <result name="success">/WEB-INF/page/controlcenter/top.jsp</result>
+        </action>
+        <action name="menu">
+            <result name="success">/WEB-INF/page/controlcenter/menu.jsp</result>
+        </action>
+        <action name="right">
+            <result name="success">/WEB-INF/page/controlcenter/right.jsp</result>
+        </action>
+        <action name="end">
+            <result name="success">/WEB-INF/page/controlcenter/end.jsp</result>
+        </action>
+    </package>
+    <!-- 产品类别管理 -->
+    <package name="type" namespace="/control/product/type" extends="struts-default">  
+        <action name="list" class="producttypeList">
+            <result name="success">/WEB-INF/page/product/producttypelist.jsp</result>
+        </action>
+        
+        <!-- 添加action -->
+        <action name="manage_addUI" class="producttypeform" method="addUI">
+            <result name="success">/WEB-INF/page/product/add_productType.jsp</result>
+        </action>
+        <action name="add_manage" class="producttypeform" method="add">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        
+        <!-- 修改action -->
+        <action name="manage_editUI" class="producttypeform" method="editUI">
+            <result name="success">/WEB-INF/page/product/edit_productType.jsp</result>
+        </action>
+        <action name="edit_manage" class="producttypeform" method="edit">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        
+        <!-- 查询action -->
+        <action name="manage_queryUI" class="producttypeform" method="queryUI">
+            <result name="success">/WEB-INF/page/product/query_productType.jsp</result>
+        </action>  
+    </package>
+    <!-- 产品品牌管理 -->
+    <package name="brand" namespace="/control/product/brand" extends="struts-default">
+        <action name="list" class="productBrandList">
+            <result name="success">/WEB-INF/page/product/brandlist.jsp</result>
+        </action>
+        
+        <action name="brand_addUI" class="productbrandform" method="addUI">
+            <result name="success">/WEB-INF/page/product/add_brand.jsp</result>
+        </action>
+        <action name="add_brand" class="productbrandform" method="add">
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+                <param name="maximumSize">1025956</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+            <result name="input">/WEB-INF/page/share/img_error.jsp</result>
+        </action>
+        
+        <action name="brand_editUI" class="productbrandform" method="editUI">
+            <result name="success">/WEB-INF/page/product/edit_brand.jsp</result>
+        </action>
+        <action name="edit_brand" class="productbrandform" method="edit">
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+                <param name="maximumSize">1025956</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+            <result name="input">/WEB-INF/page/share/img_error.jsp</result>
+        </action>
+        
+        <action name="brand_queryUI" class="productbrandform" method="queryUI">
+            <result name="success">/WEB-INF/page/product/query_brand.jsp</result>
+        </action>
+        
+    </package>
+    <!-- 上传文件管理 -->
+    <package name="upload" namespace="/control/uploadfile" extends="struts-default">
+        <action name="uploadpage" class="uploadfilemanage" method="uploadUI">
+        	<result name="success">/WEB-INF/page/uploadfile/upload.jsp</result>
+        </action>
+        <action name="upload" class="uploadfilemanage" method="upload">
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg,
+                    application/x-shockwave-flash,application/msword,application/octet-stream,
+                    application/pdf,text/plain,application/vnd.ms-excel,application/vnd.ms-powerpoint</param>
+                <param name="maximumSize">1025956</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+        	<result name="message">/WEB-INF/page/uploadfile/fileuploadfinish.jsp</result>
+        	<result name="input">/WEB-INF/page/share/file_error.jsp</result>
+        </action>
+        <action name="list" class="uploadfile" method="execute">
+        	<result name="success">/WEB-INF/page/uploadfile/uploadfilelist.jsp</result>
+        </action>
+        <action name="delete" class="uploadfilemanage" method="delete">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+    </package>
+    <!-- 产品管理 -->
+    <package name="product" namespace="/control/product" extends="struts-default">
+        <action name="list" class="productList">
+        	<result name="success">/WEB-INF/page/product/productlist.jsp</result>
+        </action>
+        <action name="product_addUI" class="productform" method="addUI">
+            <result name="success">/WEB-INF/page/product/add_product.jsp</result>
+        </action>
+        <action name="add_product" class="productform" method="add">
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+                <param name="maximumSize">1025956</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+            <result name="input">/WEB-INF/page/share/img_error.jsp</result>
+        </action>
+        <action name="productType_selectUI" class="productform" method="selectUI">
+        	<result name="success">/WEB-INF/page/product/productTypeSelect.jsp</result>
+        </action>
+        <action name="product_editUI" class="productform" method="editUI">
+        	<result name="success">/WEB-INF/page/product/edit_product.jsp</result>
+        </action>
+        <action name="edit_product" class="productform" method="edit">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="product_queryUI" class="productform" method="queryUI">
+            <result name="success">/WEB-INF/page/product/query_product.jsp</result>
+        </action>
+        <action name="productVisible" class="productform" method="visible">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="productDisable" class="productform" method="disable">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="productCommend" class="productform" method="commend">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="productUncommend" class="productform" method="uncommend">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+    </package>
+    <!-- 产品样式管理 -->
+    <package name="style" namespace="/control/product/style" extends="struts-default">
+        <action name="list" class="productstyleList">
+        	<result name="success">/WEB-INF/page/product/productstylelist.jsp</result>
+        </action>
+        <action name="style_addUI" class="productstyleform" method="addUI">
+            <result name="success">/WEB-INF/page/product/add_productstyle.jsp</result>
+        </action>
+        <action name="add_style" class="productstyleform" method="add">
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+                <param name="maximumSize">1025956</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+            <result name="input">/WEB-INF/page/share/img_error.jsp</result>
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="style_editUI" class="productstyleform" method="editUI">
+            <result name="success">/WEB-INF/page/product/edit_productstyle.jsp</result>
+        </action>
+        <action name="edit_style" class="productstyleform" method="edit">
+        	<interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+                <param name="maximumSize">1025956</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+            <result name="input">/WEB-INF/page/share/img_error.jsp</result>
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action> 
+        <action name="styleVisible" class="productstyleform" method="visible">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+
+        <action name="styleDisable" class="productstyleform" method="disable">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+    </package>
+    <!-- 网站用户管理 -->
+    <package name="usermanagement" namespace="/control/user" extends="struts-default">
+        <action name="list" class="buyerlist">
+        	<result name="success">/WEB-INF/page/user/userlist.jsp</result>
+        </action>
+        <action name="user_queryUI" class="buyerquery">
+        	<result name="success">/WEB-INF/page/user/query.jsp</result>
+        </action>
+        <action name="delete" class="buyerform" method="delete">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="enable" class="buyerform" method="enable">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+    </package>
+    <!-- 订单管理 -->
+    <package name="orderlist" namespace="/control/order" extends="struts-default">
+        <action name="list" class="orderList">
+        	<result name="success">/WEB-INF/page/book/orderlist.jsp</result>
+        </action>
+        <action name="view" class="orderview">
+        	<result name="success">/WEB-INF/page/book/orderview.jsp</result>
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="query">
+        	<result name="success">/WEB-INF/page/book/queryorder.jsp</result>
+        </action>
+        <action name="modifyContactInfoUI" class="ordermanage" method="modifyContactInfoUI">
+            <result name="success">/WEB-INF/page/book/modifyContactInfo.jsp</result>
+        </action>
+        <action name="modifyContactInfo" class="ordermanage" method="modifyContactInfo">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="modifyDeliverInfoUI" class="ordermanage" method="modifyDeliverInfoUI">
+            <result name="success">/WEB-INF/page/book/modifyDeliverInfo.jsp</result>
+        </action>
+        <action name="modifyDeliverInfo" class="ordermanage" method="modifyDeliverInfo">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="modifyProductAmountUI" class="ordermanage" method="modifyProductAmountUI">
+            <result name="success">/WEB-INF/page/book/modifyProductAmount.jsp</result>
+        </action>
+        <action name="modifyProductAmount" class="ordermanage" method="modifyProductAmount">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="deleteOrderItem" class="ordermanage" method="deleteOrderItem">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="modifyDeliverFeeUI" class="ordermanage" method="modifyDeliverFeeUI">
+            <result name="success">/WEB-INF/page/book/modifydeliverFee.jsp</result>
+        </action>
+        <action name="modifyDeliverFee" class="ordermanage" method="modifyDeliverFee">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="printOrder" class="ordermanage" method="printOrder">
+            <result name="print">/WEB-INF/page/book/print.jsp</result>
+        </action>
+        <action name="cancelOrder" class="ordermanage" method="cancelOrder">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="confirmOrder" class="ordermanage" method="confirmOrder">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="confirmPayment" class="ordermanage" method="confirmPayment">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="turnWaitdeliver" class="ordermanage" method="turnWaitdeliver">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="turnDelivered" class="ordermanage" method="turnDelivered">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="turnReceived" class="ordermanage" method="turnReceived">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="employeeUnlockOrder" class="ordermanage" method="employeeUnlockOrder">
+            <result name="success">/WEB-INF/page/share/directUrl.jsp</result>
+        </action>
+        <action name="lockorderlist" class="lockorderlist">
+            <result name="success">/WEB-INF/page/book/orderlist.jsp</result>
+        </action>
+        <action name="allUnLock" class="ordermanage" method="allUnLock">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="addMessageUI" class="ordermanage" method="addMessageUI">
+            <result name="success">/WEB-INF/page/book/ordermessage.jsp</result>
+        </action>
+        <action name="addMessage" class="ordermanage" method="addMessage">
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        
+    </package>
+    <!-- 部门管理  -->
+    <package name="departmentmanagement" namespace="/control/department" extends="struts-default">
+        <action name="list" class="privilegeList">
+        	<result name="success">/WEB-INF/page/department/departmentlist.jsp</result>
+        </action>
+        <action name="department_addUI" class="privilegemanage" method="addUI">
+        	<result name="success">/WEB-INF/page/department/adddepartment.jsp</result>
+        </action>
+        <action name="add_department" class="privilegemanage" method="add">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="department_editUI" class="privilegemanage" method="editUI">
+        	<result name="success">/WEB-INF/page/department/editdepartment.jsp</result>
+        </action>
+        <action name="edit_department" class="privilegemanage" method="edit">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="delete_department" class="privilegemanage" method="delete">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+    </package>
+    <!-- 部门员工管理  -->
+    <package name="employeemanagement" namespace="/control/employee" extends="struts-default">
+        <action name="list" class="employeeList">
+        	<result name="success">/WEB-INF/page/department/employeelist.jsp</result>
+        </action>
+        <action name="regEmployeeUI" class="employeemanage" method="regEmployeeUI">
+        	<result name="success">/WEB-INF/page/department/addemployee.jsp</result>
+        </action>
+        <action name="regEmployee" class="employeemanage" method="regEmployee">
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+                <param name="maximumSize">1025956</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        	<result name="input">/WEB-INF/page/share/img_error.jsp</result>
+        </action>
+        <action name="exist" class="employeemanage" method="exist">
+        	<result name="message">/WEB-INF/page/department/usernameIsExsit.jsp</result>
+        </action> 
+        <action name="editEmployeeUI" class="employeemanage" method="editEmployeeUI">
+        	<result name="success">/WEB-INF/page/department/editemployee.jsp</result>
+        </action>
+        <action name="editEmployee" class="employeemanage" method="editEmployee">
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+                <param name="maximumSize">1025956</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        	<result name="input">/WEB-INF/page/share/img_error.jsp</result>
+        </action>
+        <action name="leave" class="employeemanage" method="leave">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="query" class="employeemanage" method="query">
+        	<result name="success">/WEB-INF/page/department/query.jsp</result>
+        </action>
+        <action name="privilegeGroupSetUI" class="employeemanage" method="privilegeGroupSetUI">
+        	<result name="success">/WEB-INF/page/department/privilegeSet.jsp</result>
+        </action>
+        <action name="privilegeGroupSet" class="employeemanage" method="privilegeGroupSet">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        
+    </package>
+    <!-- 后台员工登录 -->
+    <package name="employeelogin" namespace="/employee" extends="struts-default">
+        <action name="logonUI">
+        	<result name="success">/WEB-INF/page/department/logon.jsp</result>
+        </action>
+        <action name="logon" class="employeelogon" >
+        	<result name="message">/WEB-INF/page/department/logon.jsp</result>
+        	<result name="control" type="redirect">/control/center/main.action</result>
+        </action>
+        <action name="logout" class="employeelogout" >
+        	<result name="success" type="redirect">/employee/logonUI.action</result>
+        </action>
+    </package>
+    <!-- 后台权限管理 -->
+    <package name="privilegeGroup" namespace="/control/privilegegroup" extends="struts-default">
+        <action name="list" class="privilegeGroupList">
+        	<result name="success">/WEB-INF/page/department/privilegegrouplist.jsp</result>
+        </action>
+        <action name="addUI" class="privilegeGroupmanage" method="addUI">
+        	<result name="success">/WEB-INF/page/department/addprivilegegroup.jsp</result>
+        </action>
+        <action name="add" class="privilegeGroupmanage" method="add">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="editUI" class="privilegeGroupmanage" method="editUI">
+        	<result name="success">/WEB-INF/page/department/editprivilegegroup.jsp</result>
+        </action>
+        <action name="edit" class="privilegeGroupmanage" method="edit">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="delete" class="privilegeGroupmanage" method="delete">
+        	<result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        
+    </package>
+    
+    
+    
+	<!-- ************************************************************************************************************ -->
+	<!-- ************************************************************************************************************ -->
+    
+    <!-- 前台控制中心管理 -->
+    <package name="frontcontrol" namespace="/center" extends="struts-default">
+        <action name="main">
+            <result name="success">/WEB-INF/page/product/frontpage/productlist.jsp</result>
+        </action>
+    </package>
+    <!-- 前台产品管理 -->
+    <package name="frontproduct" namespace="/center/product" extends="struts-default">
+        <action name="list" class="frontproduct">
+            <result name="list_image">/WEB-INF/page/product/frontpage/productlist.jsp</result>
+            <result name="list_imagetext">/WEB-INF/page/product/frontpage/productlist_text.jsp</result>
+        </action>
+        <action name="productswitch" class="frontproductswitch" method="topsell">
+            <result name="success">/WEB-INF/page/product/frontpage/topsell.jsp</result>
+        </action>
+        <action name="productswitchshowimage" class="frontproductswitch" method="showimage">
+            <result name="success">/WEB-INF/page/product/frontpage/showimage.jsp</result>
+        </action>
+        <action name="productviewhistory" class="frontproductswitch" method="getViewHistory">
+            <result name="success">/WEB-INF/page/product/frontpage/viewHistory.jsp</result>
+        </action>
+        <action name="productview" class="frontproductview">
+            <result name="success">/WEB-INF/page/product/frontpage/productview.jsp</result>
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="query" class="productsearch">
+            <result name="success">/WEB-INF/page/product/frontpage/queryproductlist.jsp</result>
+        </action>
+    </package>
+    
+    
+    <!-- 前台产购物车-->
+    <package name="frontshopping" namespace="/center/shopping" extends="struts-default">
+        <action name="cart" class="shoppingcart">
+            <result name="success">/WEB-INF/page/shopping/cart.jsp</result>
+        </action>
+        <action name="delete_cart" class="shoppingcartmanage" method="delete">
+            <result name="success">/WEB-INF/page/share/directUrl.jsp</result>
+        </action>
+        <action name="delete_allcart" class="shoppingcartmanage" method="deleteAll">
+            <result name="success">/WEB-INF/page/share/directUrl.jsp</result>
+        </action>
+        <action name="update_cart" class="shoppingcartmanage" method="updateAmount">
+            <result name="success">/WEB-INF/page/share/directUrl.jsp</result>
+        </action>
+    </package>
+    <!-- 前台用户注册-->
+    <package name="frontregister" namespace="/center/user/register" extends="struts-default">
+        <action name="regUI" class="buyerreg">
+            <result name="success">/WEB-INF/page/user/userReg.jsp</result>
+        </action>
+        <action name="reg" class="buyerreg" method="reg">
+            <result name="error" type="redirectAction">regUI</result>
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        <action name="isUserExist" class="buyerreg" method="isUserExist">
+            <result name="success">/WEB-INF/page/user/checkuser.jsp</result>
+        </action>
+    </package>
+    <!-- 前台用户登录-->
+    <package name="frontlogin" namespace="/center/user/login" extends="struts-default">
+        <action name="logUI" class="buyerlogon">
+            <result name="success">/WEB-INF/page/user/logon.jsp</result>
+            <result name="message">/WEB-INF/page/share/directUrl.jsp</result>
+        </action>
+    </package>
+    <!-- 前台用户退出登录-->
+    <package name="frontlogout" namespace="/user" extends="struts-default">
+        <action name="logout" class="buyerlogout">
+            <result name="success" type="redirect">/</result>
+        </action>
+        <action name="findpassword">
+            <result name="success">/WEB-INF/page/user/findPassword.jsp</result>
+        </action>  
+    </package>
+    <!-- 前台用户找回密码-->
+    <package name="frontfindpassword" namespace="/user/post" extends="struts-default">
+        <action name="getpassword" class="buyerfindpassword" method="getpassword">
+            <result name="message">/WEB-INF/page/user/findPassword.jsp</result>
+            <result name="success">/WEB-INF/page/user/findPassword2.jsp</result>
+        </action>
+        <action name="update" class="buyerfindpassword" method="update">
+            <result name="success">/WEB-INF/page/user/findPassword3.jsp</result>
+            <result name="error">/WEB-INF/page/user/errorresult.jsp</result>
+        </action>
+        <action name="changepassword" class="buyerfindpassword" method="changepassword">
+            <result name="error">/WEB-INF/page/user/errorresult.jsp</result>
+            <result name="message">/WEB-INF/page/share/message.jsp</result>
+        </action>
+        
+    </package>
+    
+    <!-- 前台用户购物车结算-->
+    <package name="cartpay" namespace="/customer/shopping" extends="struts-default">
+        <action name="pay_cart" class="shoppingcartmanage" method="settleaccounts">
+            <result name="success">/WEB-INF/page/share/directUrl.jsp</result>
+        </action>
+        <action name="deliver" class="shoppingcartdeliver">
+            <result name="success">/WEB-INF/page/shopping/deliverInfo.jsp</result>
+        </action>
+        <action name="manage" class="shoppingmanage" method="saveDeliverInfo">
+            <result name="success">/WEB-INF/page/share/directUrl.jsp</result>
+        </action>
+        <action name="manage_finish" class="shoppingmanage" method="saveorder">
+            <result name="success">/WEB-INF/page/share/directUrl.jsp</result>
+        </action>
+        <action name="paymentway" class="shoppingpaymentway">
+            <result name="success">/WEB-INF/page/shopping/paymentway.jsp</result>
+        </action>
+        <action name="savepaymentway" class="shoppingmanage" method="savePaymentway">
+            <result name="success">/WEB-INF/page/share/directUrl.jsp</result>
+        </action>
+        <action name="confirm" class="shoppingpaymentconfirm">
+            <result name="success">/WEB-INF/page/shopping/confirm.jsp</result>
+        </action>
+    </package>
+    <!-- 系统初始化     系统部署好以后，只需要执行一次，执行过后可以删除其在struts中的配置-->
+    <package name="systeminit" namespace="/system" extends="struts-default">
+        <action name="init" class="systemInit">
+            <result name="success">/WEB-INF/page/share/message.jsp</result> 
+        </action>
+        <action name="init1" class="systemInit1">
+            <result name="success">/WEB-INF/page/share/message.jsp</result> 
+        </action>
+    </package>
+    <!-- 购物完成-->
+    <package name="shoppingfinish" namespace="/shopping" extends="struts-default">
+        <action name="finish" class="shoppingfinish">
+            <result name="success">/WEB-INF/page/shopping/finish_net.jsp</result> 
+        </action>
+    </package>
+</struts>
